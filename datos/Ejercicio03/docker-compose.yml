@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   nginx:
-    image: holamundo:latest
+    image: mcanas/nginx
     ports:
       - "8080:80"
     restart: always
