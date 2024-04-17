@@ -1,0 +1,110 @@
+---------------------RESOLUCION--------------------------------------------------------------------------------
+1- Crear los ficheros dockerfile en cada proyecto.
+Los ficheros Dockefile ya estaban creados y tenían el contenido necesario para ejecutarse.
+---------------------------------------------------------------------------------------------------------------
+2- Ejecutar los comandos necesarios para generar las imagenes. Realizar el retag de la imagenes para que sea con la siguiente nomenclatura <vuestro nombre>/<nombre proyecto>:0.0.
+comando: docker build -t mcanas/ui-web:latest .
+resultado: PS C:\Users\mcañas\Documents\ejercicios\Docker_MarianaCanasP\docker-exercises\datos\Ejercicio02\ui-web> docker build -t mcanas/ui-web:latest  .
+[+] Building 0.0s (0/0)  docker:default
+2024/04/15 18:52:00 http2: server: error reading preface from client /[+] Building 1.7s (11/11) FINISHED                     docker:default
+ => [internal] load build definition from Dockerfile             0.1s
+ => => transferring dockerfile: 227B                             0.0s
+ => [internal] load metadata for docker.io/bitnami/node:20.12.2  1.2s
+ => [auth] bitnami/node:pull token for registry-1.docker.io      0.0s
+ => [internal] load .dockerignore                                0.1s
+ => => transferring context: 2B                                  0.0s
+ => [1/5] FROM docker.io/bitnami/node:20.12.2@sha256:289fd3924f  0.0s
+ => [internal] load build context                                0.0s
+ => => transferring context: 537B                                0.0s
+ => CACHED [2/5] RUN mkdir -p /home/apps/der-web                 0.0s
+ => CACHED [3/5] COPY . /home/apps/der-web                       0.0s
+ => CACHED [4/5] WORKDIR /home/apps/der-web                      0.0s
+ => CACHED [5/5] RUN yarn                                        0.0s 
+ => exporting to image                                           0.1s 
+ => => exporting layers                                          0.0s 
+ => => writing image sha256:6dcd27c6bc8636d12c4ab009334b5649637  0.0s 
+ => => naming to docker.io/mcanas/ui-web:latest                  0.0s
+
+What's Next?
+  View a summary of image vulnerabilities and recommendations → docker scout quickview
+
+comando: docker build -t mcanas/api-web:latest .
+resultado: PS C:\Users\mcañas\Documents\ejercicios\Docker_MarianaCanasP\docker-exercises\datos\Ejercicio02\api-web> docker build -t mcanas/api-web:latest .
+[+] Building 1.0s (10/10) FINISHED                     docker:default
+ => [internal] load build definition from Dockerfile             0.1s
+ => => transferring dockerfile: 241B                             0.0s 
+ => [internal] load metadata for docker.io/bitnami/node:20.12.2  0.6s 
+ => [internal] load .dockerignore                                0.0s
+ => => transferring context: 2B                                  0.0s 
+ => [1/5] FROM docker.io/bitnami/node:20.12.2@sha256:289fd3924f  0.0s 
+ => [internal] load build context                                0.0s 
+ => => transferring context: 130B                                0.0s 
+ => CACHED [2/5] RUN mkdir -p /home/apps/der-api-web             0.0s 
+ => CACHED [3/5] COPY . /home/apps/der-api-web                   0.0s 
+ => CACHED [4/5] WORKDIR /home/apps/der-api-web                  0.0s 
+ => CACHED [5/5] RUN npm install                                 0.0s 
+ => exporting to image                                           0.1s 
+ => => exporting layers                                          0.0s 
+ => => writing image sha256:179610d67d71a58f1dbeacb6a3822a7e7ae  0.0s 
+ => => naming to docker.io/mcanas/api-web:latest                 0.0s 
+
+What's Next?
+  View a summary of image vulnerabilities and recommendations → docker scout quickview
+
+comando: docker tag mcanas/ui-web:latest mcanas/proyecto_ej2_front:0.0.1
+comando: docker tag mcanas/api-web:latest mcanas/proyecto_ej2_back:0.0.1
+resultado: para ver el resultado hago un --> docker images
+>>
+REPOSITORY                  TAG       IMAGE ID       CREATED          SIZE
+mcanas/api-web              latest    179610d67d71   41 minutes ago   874MB
+mcanas/proyecto_ej2_back    0.0.1     179610d67d71   41 minutes ago   874MB
+mcanas/ui-web               latest    6dcd27c6bc86   43 minutes ago   1.27GB
+mcanas/proyecto_ej2_front   0.0.1     6dcd27c6bc86   43 minutes ago   1.27GB
+resultado: no se borran las imagenes, se crean dos etiquetas que apuntan a la misma imagen. 
+debería ejecutar los siguientes comandos para borrar las img.
+docker rmi mcanas/ui-web:latest
+docker rmi mcanas/api-web:latest
+-----------------------------------------------------------------------------------------------------------------
+3- Sacar una captura de pantalla del listado de imagenes, con el objetivo de comprobar que la imagen se ha creado y nombrado de forma correcta.
+docker_screenshot.jpg
+docker_screenshot2.jpg (después de aplicar docker rmi)
+-----------------------------------------------------------------------------------------------------------------
+4- Desplegar 2 contenedores, uno el front y el otro el back.(!!ojo con los puertos )
+comando: docker run -d -p 5173:5173 --name contenedorFront mcanas/proyecto_ej2_front:0.0.1
+resultado: bd0675722d160a0fc469cccc7fec8c06b7dfd9ad5cad9cd9a4785583fef025e8   
+comando: docker run -d -p 3000:3000 --name contenedorBack mcanas/proyecto_ej2_back:0.0.1
+resultado: d45fedf0d944e8ef329a6129ac21801c577d917c0b8c4b3c3b340db12d8b16bd
+-----------------------------------------------------------------------------------------------------------------
+5- Listar mediante comandos los contenedores existentes.
+comando: docker ps -a
+resultado:
+CONTAINER ID   IMAGE                             COMMAND             CREATED          STATUS  
+        PORTS                              NAMES
+d45fedf0d944   mcanas/proyecto_ej2_back:0.0.1    "node index.js"     14 seconds ago   Up 14 seconds   0.0.0.0:3000->3000/tcp             contenedorBack
+bd0675722d16   mcanas/proyecto_ej2_front:0.0.1   "yarn dev --host"   29 seconds ago   Up 28 seconds   3000/tcp, 0.0.0.0:5173->5173/tcp   contenedorFront
+-----------------------------------------------------------------------------------------------------------------
+6- Usar el navegador para verificar el funcionamiento.
+navegador_screenshot_front.jpg
+navegador_screenshot_back.jpg
+------------------------------------------------------------------------------------------------------------------
+7- Eliminar los contenedores.
+debo detener los contenedores primero: comando docker stop +nombrecontenedor
+comando: docker rm -f contenedorFront
+resultado: contenedorFront
+comando: docker rm -f contenedorBack
+resultado: contenedorBack
+comando: docker ps -a ( así vemos como quedó)
+resultado: CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+------------------------------------------------------------------------------------------------------------------
+8- Eliminar las imagenes.
+comando:docker rmi mcanas/proyecto_ej2_front:0.0.1
+resultado:Untagged: mcanas/proyecto_ej2_front:0.0.1
+Deleted: sha256:6dcd27c6bc8636d12c4ab009334b56496373b11d633659e38904bed476a5dbe9
+
+comando:docker rmi mcanas/proyecto_ej2_back:0.0.1
+resultado:Untagged: mcanas/proyecto_ej2_back:0.0.1
+Deleted: sha256:179610d67d71a58f1dbeacb6a3822a7e7ae65dcfaa2baf348042c565497c2c61
+
+comando: docker ps -a
+resultado: CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+(no quedó nada)

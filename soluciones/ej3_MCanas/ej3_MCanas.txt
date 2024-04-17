@@ -1,0 +1,57 @@
+-----------------solucion----------------------------------------------------------
+1- Generar la imagen del proyecto.
+comando: docker build .
+PS C:\Users\mcañas\Documents\ejercicios\Docker_MarianaCanasP\docker-exercises\datos\Ejercicio03> docker build .
+[+] Building 1.5s (8/8) FINISHED                                                                                                                                  docker:default
+ => [internal] load build definition from Dockerfile                                                                                                                        0.0s
+ => => transferring dockerfile: 391B                                                                                                                                        0.0s 
+ => [internal] load metadata for docker.io/library/nginx:latest                                                                                                             1.1s 
+ => [auth] library/nginx:pull token for registry-1.docker.io                                                                                                                0.0s 
+ => [internal] load .dockerignore                                                                                                                                           0.0s
+ => => transferring context: 2B                                                                                                                                             0.0s 
+ => [internal] load build context                                                                                                                                           0.0s 
+ => => transferring context: 32B                                                                                                                                            0.0s 
+ => [1/2] FROM docker.io/library/nginx:latest@sha256:9ff236ed47fe39cf1f0acf349d0e5137f8b8a6fd0b46e5117a401010e56222e1                                                       0.0s 
+ => CACHED [2/2] COPY nginx.conf /etc/nginx/nginx.conf                                                                                                                      0.0s 
+ => exporting to image                                                                                                                                                      0.0s
+ => => exporting layers                                                                                                                                                     0.0s 
+ => => writing image sha256:faff3fa2eb3671713aac0d699cb3008b5f289cd4d4c027f20d4f01d0b3e9933a                                                                                0.0s 
+
+What's Next?
+  View a summary of image vulnerabilities and recommendations → docker scout quickview
+-----------------------------------------------------------------------------------
+2- Listar las imagenes y asegurarse de que lo teneis en vuestro local.
+comando: docker images
+resultado: docker images
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+<none>       <none>    faff3fa2eb36   53 minutes ago   187MB
+le agregamos una tag
+PS C:\Users\mcañas\Documents\ejercicios\Docker_MarianaCanasP\docker-exercises\datos\Ejercicio03\docker> docker images
+REPOSITORY   TAG       IMAGE ID       CREATED             SIZE
+holamundo    latest    faff3fa2eb36   About an hour ago   187MB
+-----------------------------------------------------------------------------------
+3- Generar vuestro docker-compose con la capacidad de desplegar el contenedor y dar servicio (dejo a vuestra elección el puerto 😏)
+*** ver archivo docker-compose.yml
+------------------------------------------------------------------------------------------
+4- Testear que os da servicio usando el navegador y sacar una captura de pantalla.
+docker-compose up
+resultado: navegador_screenshot.jpg
+docker_screenshot.jpg
+----------------------------------------------------------------------------------------
+5- Modificar el fichero html/index.html para que salga vuestro nombre por ejemplo el mio quedaria asi:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Bienvenido Hector Gonazalez a mi sitio web!</title>
+</head>
+<body>
+    <h1>¡Bienvenido Hector Gonazalez a mi sitio web desplegado con NGINX en Docker!</h1>
+    <p>Este es un ejemplo básico de un sitio web desplegado utilizando NGINX en un contenedor Docker.</p>
+</body>
+</html>
+
+una vez guardado recargad la pagina y sacad captura del resultado.
+
+[!TIP] Pista La idea es que lo que renderice se encuentre en nuestro html/index.html. ¿Cual sera la forma para que el contenedor pueda acceder a este archivo desde nuestro equipo local?.

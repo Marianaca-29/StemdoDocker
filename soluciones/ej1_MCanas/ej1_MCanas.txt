@@ -1,0 +1,65 @@
+
+--------------------------------SOLUCIONES-----------------------------------------------------------------------------------------------
+1-Utilizar el comando que nos permite bajarnos una imagen para tenerla en local. La seleccion de la imagen os la dejo a vosotros.
+1-docker pull alpine
+Using default tag: latest
+latest: Pulling from library/alpine
+4abcf2066143: Pull complete
+Digest: sha256:c5b1261d6d3e43071626931fc004f70149baeba2c8ec672bd4f27761f8e1ad6b
+Status: Downloaded newer image for alpine:latest
+docker.io/library/alpine:latest
+
+What's Next?
+  View a summary of image vulnerabilities and recommendations → docker scout quickview alpine
+----------------------------------------------------------------------------------------------------------------------------------
+2-Optenido la imagen, desplegar el contenedor con la nomenclatura <vuestro nombre>-<nombre imagen>.
+2-docker run -d -i --name alpineMD -p 8081:80 alpine
+0d07ff374e093563e952032c391459094bef608cbcb369282b6f0d8e2c3ffd5b
+----------------------------------------------------------------------------------------------------------------------------------
+3-Usar el comando para listar las imagenes.
+3-docker images
+C:\WINDOWS\system32>docker images
+REPOSITORY   TAG        IMAGE ID       CREATED        SIZE
+debian       bullseye   57a92962dbeb   5 days ago     124MB
+debian       latest     e15dbfac2d2b   5 days ago     117MB
+httpd        latest     fa0099f1c09d   9 days ago     148MB
+ubuntu       latest     ca2b0f26964c   6 weeks ago    77.9MB
+alpine       latest     05455a08881e   2 months ago   7.38MB
+----------------------------------------------------------------------------------------------------------------------------------
+4-Usar el comando para listar los contenedores y su estado.
+4-docker ps -a
+C:\WINDOWS\system32>docker ps -a
+CONTAINER ID   IMAGE     COMMAND     CREATED          STATUS          PORTS                  NAMES
+0d07ff374e09   alpine    "/bin/sh"   55 seconds ago   Up 54 seconds   0.0.0.0:8081->80/tcp   alpineMD
+----------------------------------------------------------------------------------------------------------------------------------
+5-Usar el comando que os permita meteros por consola al contenedor y haced cualquier comando. Me sirve cualquiera.
+5-docker exec -d -it alpineMD touch /tmp/execWorks
+
+What's next?
+  Try Docker Debug for seamless, persistent debugging tools in any container or image → docker debug alpineMD
+  Learn more at https://docs.docker.com/go/debug-cli/
+-----------------------------------------------------------------------------------------------------------------------------------
+6-Eliminar el contenedor.
+6-C:\WINDOWS\system32>docker stop 0d07ff374e09
+0d07ff374e09
+
+C:\WINDOWS\system32>docker rm 0d07ff374e09
+0d07ff374e09
+
+C:\WINDOWS\system32>docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+-----------------------------------------------------------------------------------------------------------------------------------
+7-Eliminar la imagen de vuestro registry local.
+7-C:\WINDOWS\system32>docker rmi 05455a08881e
+Untagged: alpine:latest
+Untagged: alpine@sha256:c5b1261d6d3e43071626931fc004f70149baeba2c8ec672bd4f27761f8e1ad6b
+Deleted: sha256:05455a08881ea9cf0e752bc48e61bbd71a34c029bb13df01e40e3e70e0d007bd
+Deleted: sha256:d4fc045c9e3a848011de66f34b81f052d4f2c15a17bb196d637e526349601820
+
+C:\WINDOWS\system32>docker images
+REPOSITORY   TAG        IMAGE ID       CREATED       SIZE
+debian       bullseye   57a92962dbeb   5 days ago    124MB
+debian       latest     e15dbfac2d2b   5 days ago    117MB
+httpd        latest     fa0099f1c09d   9 days ago    148MB
+ubuntu       latest     ca2b0f26964c   6 weeks ago   77.9MB
+
